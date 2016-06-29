@@ -1,0 +1,17 @@
+echo
+echo "---- composer update ----"
+cd composer
+composer update
+cd ..
+
+
+echo
+echo "---- migrate ----"
+php migration migrations:migrate --no-interaction
+
+
+echo
+echo "---- clear cache ----"
+php bin/cache-clean.php
+
+
