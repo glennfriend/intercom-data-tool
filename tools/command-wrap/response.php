@@ -24,9 +24,9 @@ $key = $argv[1];
 include_once('CommandResponse.php');
 $config = include("{$basePath}/tools/command-wrap/setting.php");
 $response = new CommandResponse_20160629($config);
-$result = $response->fetch($key);
-$params = json_decode($result, true);
 
+$jsonString = $response->fetch($key);
+$params     = json_decode($jsonString, true);
 if (!$params['api']) {
     echo json_encode([
         'error' => 'Lack for "api" param'

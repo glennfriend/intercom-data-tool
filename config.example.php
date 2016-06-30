@@ -16,5 +16,11 @@ return [
             'pass' => '',
             'db'   => 'intercom_data_tool',
         ],
-    ]
+    ],
+    'intercom' => [
+        'app' => [
+            'id'        => '',
+            'api_key'   => '',
+        ]
+    ],
 ];
