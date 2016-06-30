@@ -1,6 +1,6 @@
 <?php
 
-if (!class_exists('CommandLineWrap_20160629_12234214012523423')) {
+if (!class_exists('CommandLineWrap_20160629')) {
 
     /*
         使用那一種 API 串接方式
@@ -10,7 +10,7 @@ if (!class_exists('CommandLineWrap_20160629_12234214012523423')) {
             請參考 document
 
     */
-    class CommandLineWrap_20160629_12234214012523423
+    class CommandLineWrap_20160629
     {
         /**
          *
@@ -170,6 +170,6 @@ if (!class_exists('CommandLineWrap_20160629_12234214012523423')) {
  */
 return function()
 {
-    return new CommandLineWrap_20160629_12234214012523423();
+    return new CommandLineWrap_20160629();
 };
 
