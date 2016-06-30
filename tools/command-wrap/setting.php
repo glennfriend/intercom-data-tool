@@ -1,6 +1,6 @@
 <?php
 
-$project_path = dirname(__DIR__);
+$project_path = dirname(dirname(__DIR__));
 $data_barter_folder_name = 'command-data-call';
 $today = @date('Y-m-d');
 

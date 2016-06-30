@@ -1,6 +1,6 @@
 <?php
 
-if (!class_exists('IntercomDataMiddleware_CommandLineWrap')) {
+if (!class_exists('CommandLineWrap_20160629_12234214012523423')) {
 
     /*
         使用那一種 API 串接方式
@@ -10,7 +10,7 @@ if (!class_exists('IntercomDataMiddleware_CommandLineWrap')) {
             請參考 document
 
     */
-    class IntercomDataMiddleware_CommandLineWrap
+    class CommandLineWrap_20160629_12234214012523423
     {
         /**
          *
@@ -27,7 +27,7 @@ if (!class_exists('IntercomDataMiddleware_CommandLineWrap')) {
          */
         public function __construct()
         {
-            $this->config = include("command.config.php");
+            $this->config = include("setting.php");
             $this->checkCallFolder();
         }
 
@@ -140,7 +140,7 @@ if (!class_exists('IntercomDataMiddleware_CommandLineWrap')) {
             if (!file_exists($path)) {
                 mkdir($path, $mode);
                 if (!file_exists($path)) {
-                    throw new \Exception('IntercomDataMiddleware_CommandLineWrap Error: can not create "call" folder.');
+                    throw new \Exception('CommandLineWrap Error: can not create "call" folder.');
                     exit;
                 }
             }
@@ -170,6 +170,6 @@ if (!class_exists('IntercomDataMiddleware_CommandLineWrap')) {
  */
 return function()
 {
-    return new IntercomDataMiddleware_CommandLineWrap();
+    return new CommandLineWrap_20160629_12234214012523423();
 };
 

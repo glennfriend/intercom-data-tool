@@ -19,16 +19,18 @@ if (!isset($argv[1])) {
 $key = $argv[1];
 
 // --------------------------------------------------------------------------------
-//  該程式必須配合 command-request.php 來做改變
+//  該程式必須配合 request.php 來做改變
 // --------------------------------------------------------------------------------
-//$api = include("{$basePath}/tools/command-request.php");
-//show($api());
-
-$config = include("{$basePath}/tools/command.config.php");
-$response = new IntercomDataMiddleware_CommandResponse($config);
+$config = include("{$basePath}/tools/command-wrap/setting.php");
+$response = new CommandResponse_20160629_15534543534252345($config);
 echo $response->fetch($key);
 
-class IntercomDataMiddleware_CommandResponse
+
+
+// --------------------------------------------------------------------------------
+// 
+// --------------------------------------------------------------------------------
+class CommandResponse_20160629_15534543534252345
 {
     /**
      *

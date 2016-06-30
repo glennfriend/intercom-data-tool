@@ -12,7 +12,7 @@
 ##如何使用 Command Line Wrap API
 ```php
     $path = "/var/www/your-project";
-    $api = include("{$path}/tools/command-request.php");
+    $api = include("{$path}/tools/command-wrap/request.php");
 
     $data = [
         'params' => [
