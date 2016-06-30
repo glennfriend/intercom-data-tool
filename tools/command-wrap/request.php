@@ -18,9 +18,14 @@ if (!class_exists('CommandLineWrap_20160629')) {
         protected $config = [];
 
         /**
-         *
+         *  取得解析後的錯誤訊息
          */
         protected $error = null;
+
+        /**
+         *  取得的原始資料
+         */
+        protected $output = null;
 
         /**
          *
@@ -42,12 +47,15 @@ if (!class_exists('CommandLineWrap_20160629')) {
          *
          *  @return json string or false
          */
-        public function call($type, Array $data)
+        public function call($requestResourceKey, Array $data)
         {
+            $this->error    = null;
+            $this->output   = null;
+
             $json =
                 json_encode([
-                    'type' => $type,
-                    'data' => $data,
+                    'api'   => $requestResourceKey,
+                    'data'  => $data,
                 ],
                 JSON_PRETTY_PRINT
             );
@@ -56,29 +64,37 @@ if (!class_exists('CommandLineWrap_20160629')) {
             $file = $this->config['call_path'] . '/' . $key;
             if (file_exists($file)) {
                 // 出現重覆檔案的機率 非常低
+                $this->error = 'file name collision';
                 return false;
             }
 
             $result = $this->save($file, $json);
             if (!$result) {
                 // 無法建立檔案
+                $this->error = 'can not create json file';
                 return false;
             }
 
-            $data = $this->exec($key);
-            if (!$data) {
-                return null;
-            }
-
-            return $data;
+            $result = $this->exec($key);
+            return $result;
         }
 
         /**
+         *  取得錯誤訊息
          *  return string or null
          */
         public function getError()
         {
-            return $this->error;
+            return $this->error . "\n";
+        }
+
+        /**
+         *  發生錯誤時, 取得原始的內容
+         *  return string
+         */
+        public function getOriginOutput()
+        {
+            return $this->output;
         }
 
         // --------------------------------------------------------------------------------
@@ -91,12 +107,10 @@ if (!class_exists('CommandLineWrap_20160629')) {
          */
         private function exec($key)
         {
-            $this->error = null;
+            $responseFile = __DIR__ . '/response.php';
+            $this->output = shell_exec("php {$responseFile} {$key}");
 
-            $projectPath = $this->config['project_path'];
-            $output = shell_exec("php {$projectPath}/tools/command-response.php {$key}");
-
-            $data = json_decode($output, true);
+            $data = json_decode($this->output, true);
             switch (json_last_error()) {
                 case JSON_ERROR_NONE:
                     return $data;
@@ -164,12 +178,10 @@ if (!class_exists('CommandLineWrap_20160629')) {
 
 
 /**
- *  使用 Closure 的方式
+ *  factory class
  *  使用者不用知道 class name
  *  所以如果內部程式要改名稱, 也不會影響使用者
  */
-return function()
-{
-    return new CommandLineWrap_20160629();
-};
+return new CommandLineWrap_20160629();
+
 

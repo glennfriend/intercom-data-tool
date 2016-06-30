@@ -1,7 +1,6 @@
-Api         - 
-Business    - ╕@╔н╟с╥~еч©Х╚й╦к, business layer
-Controllers - ╤г╓J╟я╪фЁB╡z, ╓ю╛ё view, ╛y╣{╨ч╡z, ╕@╔неч©Х╔i╘Я╘С "Business"
-Library     - ╟╙╓╨╩E╣L╫╒╕X╣{╕║, ╔i╔H╔А╓W composer ╙╨╣{╕║╫X
+Business    - Е┘╠Г■╗Е∙├Ф╔╜И┌▐Х╪╞Е╟│Хё², business layer
+Controllers - Е┌ЁЕ┘╔Е▐┐Ф∙╦Х≥∙Г░├, Е┬├Ф╢╬ view, Ф╣│Г╗▀Г╝║Г░├, Е┘╠Г■╗И┌▐Х╪╞Е▐╞Ф■╬Ф√╪ "Business"
+Library     - И╚≤Е┘╖Х│ Г└║Х─╕Е░┬Г╗▀Е╪▐, Е▐╞Д╩╔Д╦÷Д╦┼ composer Г └Г╗▀Е╪▐Г╒╪
 Model       - Data Access Object
-Utility     - App project ╠M╔н╙╨╣{╕║, helper ╫п╘Я╦m╕╧ЁB
-
+Utility     - App project Е╟┬Г■╗Г └Г╗▀Е╪▐, helper Х╚▀Ф■╬Г╫╝Ф╜╓Х≥∙
+WrapApi     - 

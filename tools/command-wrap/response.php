@@ -1,5 +1,5 @@
 <?php
-$basePath = dirname(__DIR__);
+$basePath = dirname(dirname(__DIR__));
 require_once $basePath . '/core/bootstrap.php';
 initialize($basePath);
 
@@ -21,80 +21,37 @@ $key = $argv[1];
 // --------------------------------------------------------------------------------
 //  該程式必須配合 request.php 來做改變
 // --------------------------------------------------------------------------------
+include_once('CommandResponse.php');
 $config = include("{$basePath}/tools/command-wrap/setting.php");
 $response = new CommandResponse_20160629($config);
-echo $response->fetch($key);
+$result = $response->fetch($key);
+$params = json_decode($result, true);
 
-
-
-
-// --------------------------------------------------------------------------------
-// 
-// --------------------------------------------------------------------------------
-class CommandResponse_20160629
-{
-    /**
-     *
-     */
-    public function __construct($config)
-    {
-        $this->config = $config;
-        $this->checkCompleteFolder();
-    }
-
-    /**
-     *  取得資料, 並歸檔到資料夾
-     */
-    public function fetch($key)
-    {
-        $content = $this->getContentByKey($key);
-        $this->fileAway($key);
-        return $content;
-    }
-
-    // --------------------------------------------------------------------------------
-    //  private
-    // --------------------------------------------------------------------------------
-
-    /**
-     *
-     */
-    private function getContentByKey($key)
-    {
-        $file = $this->config['call_path'] . '/' . $key;
-        if (file_exists($file)) {
-            return file_get_contents($file);
-        }
-        return null;
-    }
-
-    /**
-     *
-     */
-    private function fileAway($key)
-    {
-        $from = $this->config['call_path']     . '/' . $key;
-        $to   = $this->config['complete_path'] . '/' . $key;
-        if (!file_exists($from)) {
-            return;
-        }
-        rename($from, $to);
-    }
-
-    /**
-     *  檢查 temp folder 是否有問題
-     */
-    private function checkCompleteFolder()
-    {
-        $mode = 0777;
-        $path = $this->config['complete_path'];
-        if (!file_exists($path)) {
-            mkdir($path, $mode, true);
-            if (!file_exists($path)) {
-                throw new \Exception('CommandResponse Error: can not create "complete" folder.');
-                exit;
-            }
-        }
-    }
-
+if (!$params['api']) {
+    echo json_encode([
+        'error' => 'Lack for "api" param'
+    ]);
+    exit;
 }
+if (!preg_match('/^[a-zA-Z0-9_-]+$/', $params['api'])) {
+    echo json_encode([
+        'error' => '"api" param error'
+    ]);
+    exit;
+}
+
+switch ($params['api']) {
+    case 'get':
+        (new App\CommandWrapApi\Users())->getAll($params);
+    break;
+    default:
+        echo json_encode([
+            'error' => 'API not found'
+        ]);
+    break;
+}
+
+echo "\n";
+
+
+
