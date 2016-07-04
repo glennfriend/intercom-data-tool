@@ -1,5 +1,6 @@
 <?php
 namespace App\CommandWrapApi;
+use App\Model\IntercomApps;
 use App\Model\IntercomUsers;
 use App\Business\Intercom\InfoOutputPack;
 
@@ -14,17 +15,20 @@ class User extends BaseCommandWrapApi
     }
 
     /**
-     *  get by id
+     *  get by intercom id
      */
     public function getByItemId(Array $params)
     {
+        $intercomApp = $this->getIntercomAppByParams($params);
         if (!isset($params['item_id'])) {
             $this->putError('param `item_id` not found');
         }
 
         $fields = array_filter([
-            'itemId' => $params['item_id'],
+            'intercomAppId' => $intercomApp->getId(),
+            'itemId'        => $params['item_id'],
         ]);
+
         $intercomUsers   = new IntercomUsers();
         $myIntercomUsers = $intercomUsers->findIntercomUsers($fields);
         if (!isset($myIntercomUsers[0])) {
@@ -42,16 +46,18 @@ class User extends BaseCommandWrapApi
     }
 
     /**
-     *  get by user id
+     *  get by intercom user id
      */
     public function getByItemUserId(Array $params)
     {
+        $intercomApp = $this->getIntercomAppByParams($params);
         if (!isset($params['item_user_id'])) {
             $this->putError('param `item_user_id` not found');
         }
 
         $fields = array_filter([
-            'itemUserId' => $params['item_user_id'],
+            'intercomAppId' => $intercomApp->getId(),
+            'itemUserId'    => $params['item_user_id'],
         ]);
         $intercomUsers   = new IntercomUsers();
         $myIntercomUsers = $intercomUsers->findIntercomUsers($fields);
@@ -74,12 +80,14 @@ class User extends BaseCommandWrapApi
      */
     public function getByEmail(Array $params)
     {
+        $intercomApp = $this->getIntercomAppByParams($params);
         if (!isset($params['email'])) {
             $this->putError('param `email` not found');
         }
 
         $fields = array_filter([
-            'email' => $params['email'],
+            'intercomAppId' => $intercomApp->getId(),
+            'email'         => $params['email'],
         ]);
         $intercomUsers   = new IntercomUsers();
         $myIntercomUsers = $intercomUsers->findIntercomUsers($fields);
@@ -95,6 +103,28 @@ class User extends BaseCommandWrapApi
         $this->output([
             'user' => InfoOutputPack::fetchOne('intercom_user')
         ]);
+    }
+
+    // --------------------------------------------------------------------------------
+    //  private
+    // --------------------------------------------------------------------------------
+
+    /**
+     *
+     */
+    private function getIntercomAppByParams($params)
+    {
+        if (!isset($params['account'])) {
+            $this->putError('param `account` not found');
+        }
+
+        $intercomApps = new IntercomApps();
+        $intercomApp = $intercomApps->getIntercomAppByAccount($params['account']);
+        if (!$intercomApp) {
+            $this->putError('intercom-app not found');
+        }
+
+        return $intercomApp;
     }
 
 }
