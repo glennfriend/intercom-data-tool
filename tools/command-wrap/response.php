@@ -26,26 +26,33 @@ $config = include("{$basePath}/tools/command-wrap/setting.php");
 $response = new CommandResponse_20160629($config);
 
 $jsonString = $response->fetch($key);
-$params     = json_decode($jsonString, true);
-if (!$params['api']) {
+$data       = json_decode($jsonString, true);
+if (!$data['api']) {
     echo json_encode([
         'error' => 'Lack for "api" param'
     ]);
     exit;
 }
-if (!preg_match('/^[a-zA-Z0-9_\-\/]+$/', $params['api'])) {
+if (!preg_match('/^[a-zA-Z0-9_\-\/]+$/', $data['api'])) {
     echo json_encode([
         'error' => '"api" param error'
     ]);
     exit;
 }
 
-switch ($params['api']) {
+$params = $data['data'];
+switch ($data['api']) {
     case '/sync/now':
         (new App\CommandWrapApi\Sync())->now($params);
     break;
-    case '/user/get':
-        (new App\CommandWrapApi\User())->get($params);
+    case '/user/getByItemId':
+        (new App\CommandWrapApi\User())->getByItemId($params);
+    break;
+    case '/user/getByItemUserId':
+        (new App\CommandWrapApi\User())->getByItemUserId($params);
+    break;
+    case '/user/getByEmail':
+        (new App\CommandWrapApi\User())->getByEmail($params);
     break;
     default:
         echo json_encode([
