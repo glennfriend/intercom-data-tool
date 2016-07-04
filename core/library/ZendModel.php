@@ -64,12 +64,12 @@ class ZendModel
      * you can rewrite it
      * @return string|null
      */
-    public function getFullCacheKey( $value, $key )
+    public function getFullCacheKey($value, $key)
     {
         if (!$key) {
             return null;
         }
-        return "CACHE_MODELS.". trim($key) .".". trim($value);
+        return "CACHE_MODELS.". trim(strval($key)) .".". trim(strval($value));
     }
 
     /**
@@ -434,10 +434,10 @@ class ZendModel
      * @param string - cache key
      * @return object or false
      */
-    protected function getObject( $field, $value, $cacheKey=null )
+    protected function getObject($field, $value, $cacheKey=null)
     {
         if ( $cacheKey ) {
-            $fullCacheKey = self::getFullCacheKey( $value, $cacheKey );
+            $fullCacheKey = self::getFullCacheKey($value, $cacheKey);
             $object = self::getCache()->get( $fullCacheKey );
             if( $object ) {
                 return $object;
