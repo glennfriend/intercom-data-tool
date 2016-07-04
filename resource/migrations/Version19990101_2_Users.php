@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role_names` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
   `status` tinyint(2) unsigned NOT NULL,
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_time` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `update_time` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
   `properties` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

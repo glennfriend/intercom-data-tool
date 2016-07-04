@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `user_logs` (
   `content` text NOT NULL,
   `ip` varchar(15) NOT NULL,
   `ipn` int(10) unsigned NOT NULL,
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `create_time` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `user_logs`

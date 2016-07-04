@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS `intercom_users` (
   `email` varchar(100) NOT NULL,
   `origin_content` text NOT NULL,
   `properties` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `created_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `intercom_users`
