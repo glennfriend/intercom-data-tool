@@ -39,7 +39,7 @@ class Sync extends BaseCommandWrapApi
         $id     = null;
         $apiKey = null;
         foreach (conf('intercom.app') as $app) {
-            if ($app['id'] === $params['data']['account']) {
+            if ($app['id'] === $params['account']) {
                 $id     = $app['id'];
                 $apiKey = $app['api_key'];
                 break;
