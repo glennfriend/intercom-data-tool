@@ -1,8 +1,8 @@
-echo
-echo "---- composer update ----"
-cd composer
-composer update
-cd ..
+# echo
+# echo "---- composer update ----"
+# cd composer
+# composer update
+# cd ..
 
 
 echo
