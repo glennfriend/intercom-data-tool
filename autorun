@@ -6,12 +6,12 @@ cd ..
 
 
 echo
-echo "---- migrate ----"
-php migration migrations:migrate --no-interaction
+echo "---- clear cache ----"
+php bin/cache-clean.php
 
 
 echo
-echo "---- clear cache ----"
-php bin/cache-clean.php
+echo "---- migrate ----"
+php migration migrations:migrate --no-interaction
 
 
