@@ -33,7 +33,7 @@ if (!$params['api']) {
     ]);
     exit;
 }
-if (!preg_match('/^[a-zA-Z0-9_-]+$/', $params['api'])) {
+if (!preg_match('/^[a-zA-Z0-9_\-\/]+$/', $params['api'])) {
     echo json_encode([
         'error' => '"api" param error'
     ]);
@@ -41,8 +41,11 @@ if (!preg_match('/^[a-zA-Z0-9_-]+$/', $params['api'])) {
 }
 
 switch ($params['api']) {
-    case 'get':
-        (new App\CommandWrapApi\Users())->getAll($params);
+    case '/sync/now':
+        (new App\CommandWrapApi\Sync())->now($params);
+    break;
+    case '/user/get':
+        (new App\CommandWrapApi\User())->get($params);
     break;
     default:
         echo json_encode([

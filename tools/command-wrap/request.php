@@ -1,4 +1,9 @@
 <?php
+/*
+    引用時請注意
+    不能使用 include_once() or require_once()
+    請使用 include()
+*/
 
 if (!class_exists('CommandLineWrap_20160629')) {
 
@@ -47,7 +52,7 @@ if (!class_exists('CommandLineWrap_20160629')) {
          *
          *  @return json string or false
          */
-        public function call($requestResourceKey, Array $data)
+        public function call($requestResourceKey, Array $data=[])
         {
             $this->error    = null;
             $this->output   = null;
@@ -85,6 +90,11 @@ if (!class_exists('CommandLineWrap_20160629')) {
          */
         public function getError()
         {
+            if (!$this->error) {
+                return null;
+            }
+
+            // "\n" 符號, 在評估後, 可以移除
             return $this->error . "\n";
         }
 
