@@ -54,6 +54,16 @@ switch ($data['api']) {
     case '/user/getByEmail':
         (new App\CommandWrapApi\User())->getByEmail($params);
     break;
+    case '/help':
+        $desc = <<<EOD
+/sync/now               => 對 intercom API 做資料同步
+/user/getByItemId       => get user by Intercom-id
+/user/getByItemUserId   => get user by Intercom-user-id
+/user/getByEmail        => get user by email
+\n
+EOD;
+        echo json_encode($desc);
+    break;
     default:
         echo json_encode([
             'error' => 'API not found'

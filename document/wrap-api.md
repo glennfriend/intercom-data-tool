@@ -14,16 +14,16 @@
 $path = "/var/www/your-project";
 $wrap = include("{$path}/tools/command-wrap/request.php");
 
-$data = [
-    'account' => '某個帳號',
+$params = [
+    'account'  => '帳號',
+    'password' => '密碼',
 ];
-
-$result = $wrap->call('get', $data);
-if ($result) {
-    print_r($result);
-}
-else {
+$result = $wrap->call('/user/get', $params);
+if ($wrap->getError()) {
     echo "Error: "          . $wrap->getError();
     echo "Origin Output:\n" . $wrap->getOriginOutput();
+    exit;
 }
+print_r($result);
+
 ```
