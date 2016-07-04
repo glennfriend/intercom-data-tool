@@ -57,10 +57,10 @@ class Sync extends BaseCommandWrapApi
             $this->putError('intercom app error!');
         }
 
-        $result = $this->syncUsers($curl, $intercomApp);
+        $totalCount = $this->syncUsers($curl, $intercomApp);
 
         $this->output([
-            'result' => $result,
+            'add_total_count' => $totalCount,
         ]);
     }
 
@@ -69,17 +69,17 @@ class Sync extends BaseCommandWrapApi
     // --------------------------------------------------------------------------------
 
     /**
-     *
+     *  return int (total add count) or false
      */
     private function syncUsers($curl, $intercomApp, $page = 1)
     {
-
         $result = $curl->userList($page);
         if (!$result || !is_array($result) || !isset($result['users'])) {
             // $this->putError('Error, Can not get data by https://api.intercom.io/');
             return false;
         }
 
+        $totalCount = 0;
         $isAddIntercomUser = false;
         $intercomUsers = new IntercomUsers();
         foreach ($result['users'] as $user) {
@@ -102,16 +102,20 @@ class Sync extends BaseCommandWrapApi
                 $intercomUser->setCreatedAt     ( $user['created_at']   );
                 $intercomUser->setUpdatedAt     ( $user['updated_at']   );
                 $intercomUsers->addIntercomUser($intercomUser);
+                $totalCount++;
             }
         }
 
         // true -> 這次從 intercom API 取得資料的最後一筆有被寫入資料庫
         // 表示要繼續呼叫 API, 繼續寫入資料
         if ($isAddIntercomUser) {
-            $this->syncUsers($curl, $intercomApp, $page+1);
+            $addCount = $this->syncUsers($curl, $intercomApp, $page+1);
+            if ($addCount) {
+                $totalCount += $addCount;
+            }
         }
 
-        return true;
+        return $totalCount;
     }
 
     /**
@@ -129,8 +133,7 @@ class Sync extends BaseCommandWrapApi
 
         $intercomApp = new IntercomApp;
         $intercomApp->setAccount($account);
-        $intercomApps->addIntercomApp($intercomApp);
-        return $intercomApp;
+        return $intercomApps->addIntercomApp($intercomApp);
     }
 
 }

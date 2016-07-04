@@ -65,7 +65,7 @@ class IntercomApps extends \ZendModel
     /**
      *  add
      *  @param IntercomApp object
-     *  @return insert id or false
+     *  @return object or false
      */
     public function addIntercomApp(IntercomApp $object)
     {
@@ -79,7 +79,7 @@ class IntercomApps extends \ZendModel
             return false;
         }
 
-        return $insertId;
+        return $object;
     }
 
     /**
