@@ -80,6 +80,7 @@ class Sync extends BaseCommandWrapApi
             return false;
         }
 
+        $isAddIntercomUser = false;
         $intercomUsers = new IntercomUsers();
         foreach ($result['users'] as $user) {
 
