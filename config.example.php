@@ -19,8 +19,10 @@ return [
     ],
     'intercom' => [
         'app' => [
-            'id'        => '',
-            'api_key'   => '',
+            [
+                'id'        => '',
+                'api_key'   => '',
+            ],
         ]
     ],
 ];
