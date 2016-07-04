@@ -38,7 +38,7 @@ class IntercomUser extends \BaseObject
             ],
             'origin_content' => [
                 'type'    => 'string',
-                'filters' => ['strip_tags','trim'],
+                'filters' => [],
             ],
             'properties' => [
                 'type'    => 'string',

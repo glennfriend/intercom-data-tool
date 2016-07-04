@@ -35,15 +35,15 @@ class IntercomUsers extends \ZendModel
     public function mapRow($row)
     {
         $object = new IntercomUser();
-        $object->setId                   ( $row['id']                      );
-        $object->setIntercomAppId        ( $row['intercom_app_id']         );
-        $object->setItemId               ( $row['item_id']                 );
-        $object->setItemUserId           ( $row['item_user_id']            );
-        $object->setEmail                ( $row['email']                   );
-        $object->setOriginContent        ( $row['origin_content']          );
-        $object->setProperties           ( unserialize($row['properties']) );
-        $object->setCreatedAt            ( strtotime($row['created_at'])   );
-        $object->setUpdatedAt            ( strtotime($row['updated_at'])   );
+        $object->setId                   ( $row['id']                           );
+        $object->setIntercomAppId        ( $row['intercom_app_id']              );
+        $object->setItemId               ( $row['item_id']                      );
+        $object->setItemUserId           ( $row['item_user_id']                 );
+        $object->setEmail                ( $row['email']                        );
+        $object->setOriginContent        ( unserialize($row['origin_content'])  );
+        $object->setProperties           ( unserialize($row['properties'])      );
+        $object->setCreatedAt            ( strtotime($row['created_at'])        );
+        $object->setUpdatedAt            ( strtotime($row['updated_at'])        );
         return $object;
     }
 
@@ -109,7 +109,7 @@ class IntercomUsers extends \ZendModel
      *  @param int id
      *  @return boolean
      */
-    public function deleteIntercomUser(int $id)
+    public function deleteIntercomUser($id)
     {
         $object = $this->getIntercomUser($id);
         if (!$object) {
@@ -223,20 +223,21 @@ class IntercomUsers extends \ZendModel
         \ZendModelWhiteListHelper::perform($vals, $map, $opt);
         $select = $this->getDbSelect();
 
+
         if (isset($vals['id'])) {
-            $select->where->and->equalTo($vals['id'], $vals['id']);
+            $select->where->and->equalTo($map['id'], $vals['id']);
         }
         if (isset($vals['intercomAppId'])) {
-            $select->where->and->equalTo($vals['intercomAppId'], $vals['intercomAppId']);
+            $select->where->and->equalTo($map['intercomAppId'], $vals['intercomAppId']);
         }
         if (isset($vals['itemId'])) {
-            $select->where->and->equalTo($vals['itemId'], $vals['itemId']);
+            $select->where->and->equalTo($map['itemId'], $vals['itemId']);
         }
         if (isset($vals['itemUserId'])) {
-            $select->where->and->equalTo($vals['itemUserId'], $vals['itemUserId']);
+            $select->where->and->equalTo($map['itemUserId'], $vals['itemUserId']);
         }
         if (isset($vals['email'])) {
-            $select->where->and->equalTo($vals['email'], $vals['email']);
+            $select->where->and->equalTo($map['email'], $vals['email']);
         }
 
         if (!$isGetCount) {
