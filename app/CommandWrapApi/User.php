@@ -14,7 +14,7 @@ class Users extends BaseCommandWrapApi
     /**
      *  @param $data 從客戶傳來的資料
      */
-    public function getAll(Array $data)
+    public function get(Array $data)
     {
         //print_r($data);
 
