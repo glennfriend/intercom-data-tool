@@ -1,4 +1,8 @@
 <?php
+/*
+    該程式用來建立可以登入後台的帳號
+*/
+
 $basePath = dirname(__DIR__);
 require_once $basePath . '/core/bootstrap.php';
 initialize($basePath);
